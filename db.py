@@ -1,4 +1,3 @@
-"""数据库相关操作"""
 import redis
 from random import choice
 import settings
@@ -14,7 +13,7 @@ class RedisClient:
         """
         self.db = redis.StrictRedis(host=host, port=port, password=password, decode_responses=True)
 
-    def add(self, proxy, score=100):
+    def add(self, proxy, score=50):
         """
         添加代理, 设置分数为最高
         :param proxy: 代理
@@ -30,7 +29,7 @@ class RedisClient:
         随机获取有效代理, 首先尝试获取最高分数代理, 如果最高分数不存在, 则按排名获取, 否则异常
         :return: 随机代理
         """
-        result = self.db.zrangebyscore('proxies', 100, 100)    # 返回分数为100的代理列表
+        result = self.db.zrangebyscore('proxies', 50, 50)    # 返回分数为50的代理列表
         if len(result):
             return choice(result)
         else:
@@ -48,8 +47,8 @@ class RedisClient:
         """
         score = self.db.zscore('proxies', proxy)
         if score and score > 0:
-            print('代理', proxy, '当前分数', score, '减五')
-            return self.db.zincrby('proxies', -5, proxy)    # 将代理proxy的分数减五
+            print('代理', proxy, '当前分数', score, '减10')
+            return self.db.zincrby('proxies', -10, proxy)    # 将代理proxy的分数减五
         else:
             print('代理', proxy, '当前分数', score, '移除')
             return self.db.zrem('proxies', proxy)
@@ -64,12 +63,12 @@ class RedisClient:
 
     def max(self, proxy):
         """
-        将代理设置为100分
+        将代理设置为50分
         :param proxy: 代理
         :return: 设置结果
         """
-        print('代理', proxy, '可用, 设置为', 100)
-        return self.db.zadd('proxies', {proxy: 100})
+        print('代理', proxy, '可用, 设置为', 50)
+        return self.db.zadd('proxies', {proxy: 50})
 
     def count(self):
         """
@@ -83,4 +82,4 @@ class RedisClient:
         获取全部代理
         :return: 全部代理列表
         """
-        return self.db.zrangebyscore('proxies', 0, 100)
+        return self.db.zrangebyscore('proxies', 0, 50)

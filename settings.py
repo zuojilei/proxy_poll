@@ -1,7 +1,7 @@
 # 待测试的网址
 target_url = 'https://www.baidu.com/'
 # 代理池中代理个数限定值，少于该值才执行爬取
-proxy_enough_count = 1000
+proxy_enough_count = 200
 # 测试代理时每次请求最大数
 test_request_count = 20
 # 爬取代理及测试代理的请求头
@@ -11,7 +11,7 @@ headers = {
 }
 
 # 数据库设置
-redis_host = 'localhost'
+redis_host = '127.0.0.1'
 redis_port = 6379
 redis_password = ''
 

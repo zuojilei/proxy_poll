@@ -9,6 +9,7 @@ class Crawler:
     """
     爬取代理的类
     """
+
     def __init__(self):
         # 爬取代理方法的列表
         self.crawl_funcs = []
@@ -43,14 +44,14 @@ class Crawler:
             proxies.append(proxy)
         return proxies
 
-    def crawl_xicidaili(self, page_count=5):
+    def crawl_xicidaili(self, page_count=10):
         """
         爬取西刺代理
         :param page_count: 爬取页面数
         :return:
         """
         url = 'https://www.xicidaili.com/nn/'
-        urls = [url + str(i) for i in range(1, page_count+1)]
+        urls = [url + str(i) for i in range(1, page_count + 1)]
         with futures.ThreadPoolExecutor(5) as executor:
             soups = executor.map(self.get_page, urls)
         for soup in soups:
@@ -61,7 +62,7 @@ class Crawler:
                 port = tr.select('td')[2].get_text()
                 yield ':'.join((ip, port))
 
-    def crawl_kuaidaili(self, page_count=5, wait=3):
+    def crawl_kuaidaili(self, page_count=10, wait=3):
         """
         爬取快代理
         :param page_count: 爬取页面数
@@ -69,7 +70,7 @@ class Crawler:
         :return: 代理
         """
         url = 'https://www.kuaidaili.com/free/inha/'
-        urls = [url + str(i) for i in range(1, page_count+1)]
+        urls = [url + str(i) for i in range(1, page_count + 1)]
         for url in urls:
             soup = self.get_page(url)
             trs = soup.select('tbody tr')
@@ -79,7 +80,38 @@ class Crawler:
                 yield ':'.join((ip, port))
             time.sleep(wait)
 
+    def crawl_ihuan(self):
+        """
+        小幻http代理
+        :param page_count: 爬取页面数
+        :param wait: 延迟时间
+        :return: 代理
+        """
+        url = 'https://ip.ihuan.me/?page=1'
+        soup = self.get_page(url)
+        trs = soup.select('table[class="table table-hover table-bordered"] tbody tr')
+        for tr in trs:
+            ip = tr.select('td')[0].get_text()
+            port = tr.select('td')[1].get_text()
+            yield ':'.join((ip, port))
+            time.sleep(1)
+
+    def crawl_eightnine(self, page_count=10, wait=1):
+        """
+        爬取89免费代理
+        """
+        url = 'http://www.89ip.cn/index_{}.html'
+        urls = [url.format(i) for i in range(1, page_count + 1)]
+        for url in urls:
+            soup = self.get_page(url)
+            trs = soup.select('table[class="layui-table"] tbody tr')
+            for tr in trs:
+                ip = tr.select('td')[0].get_text().strip()
+                port = tr.select('td')[1].get_text().strip()
+                yield ':'.join((ip, port))
+            time.sleep(wait)
+
 
 if __name__ == '__main__':
     test = Crawler()
-    xicidaili = test.get_proxies('crawl_xicidaili')
+    xicidaili = test.get_proxies('crawl_ihuan')

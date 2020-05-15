@@ -50,11 +50,12 @@ class Tester:
                 test_proxies = proxies[i:i + settings.test_request_count]
                 task = [self.test_single_proxy(proxy) for proxy in test_proxies]
                 loop.run_until_complete(asyncio.wait(task))
-                time.sleep(5)
+                time.sleep(3)
         except Exception as e:
             print('测试出现异常', e.args)
 
 
 if __name__ == '__main__':
     test = Tester()
-    test.run()
+    while True:
+        test.run()
