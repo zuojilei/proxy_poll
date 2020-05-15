@@ -39,7 +39,7 @@ class Scheduler:
         开启API
         :return: None
         """
-        server = make_server('127.0.0.1', 5001, app)
+        server = make_server('0.0.0.0', 5000, app)
         server.serve_forever()
         app.run()
 
