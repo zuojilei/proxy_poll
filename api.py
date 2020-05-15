@@ -1,4 +1,5 @@
 """取出随机高分代理"""
+from wsgiref.simple_server import make_server
 from flask import Flask, g
 from db import RedisClient
 __all__ = ['app']
@@ -37,4 +38,6 @@ def get_counts():
 
 
 if __name__ == '__main__':
+    server = make_server('127.0.0.1', 5000, app)
+    server.serve_forever()
     app.run()

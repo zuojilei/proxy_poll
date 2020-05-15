@@ -5,6 +5,7 @@ from saver import Saver
 from tester import Tester
 import time
 import settings
+from wsgiref.simple_server import make_server
 
 
 class Scheduler:
@@ -35,7 +36,9 @@ class Scheduler:
         开启API
         :return: None
         """
-        app.run(port=4555, debug=True)
+        server = make_server('127.0.0.1', 5000, app)
+        server.serve_forever()
+        app.run()
 
     def run(self):
         print('代理池开始运行...')
