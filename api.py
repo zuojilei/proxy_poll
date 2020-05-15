@@ -38,6 +38,6 @@ def get_counts():
 
 
 if __name__ == '__main__':
-    server = make_server('152.136.116.233', 5000, app)
+    server = make_server('127.0.0.1', 5001, app)
     server.serve_forever()
     app.run()
