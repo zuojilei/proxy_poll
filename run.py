@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """控制是否抓取代理, 是否测试代理, 是否打开代理获取接口"""
 from multiprocessing import Process
 from api import app

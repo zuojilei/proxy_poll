@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """爬取代理，存入数据库"""
 from db import RedisClient
 from crawler import Crawler

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 """定义爬取代理的类"""
 import requests
 from bs4 import BeautifulSoup

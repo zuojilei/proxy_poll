@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """测试代理是否对指定url可用"""
 import aiohttp
 import asyncio

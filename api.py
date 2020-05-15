@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """取出随机高分代理"""
 from wsgiref.simple_server import make_server
 from flask import Flask, g
